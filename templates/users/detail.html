@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+{% endblock %}
+{% block body %}
+     {% block usercenter %}{% endblock %}
+    {% block cart %}{% endblock %}
+	<div class="navbar_con">
+		<div class="navbar clearfix">
+			<div class="subnav_con fl">
+				<h1>全部商品分类</h1>	
+				<span></span>			
+				<ul class="subnav">
+					<li><a href="#" class="python">Python</a></li>
+					<li><a href="#" class="javascript">Javascript</a></li>
+					<li><a href="#" class="algorithms">数据结构与算法</a></li>
+					<li><a href="#" class="machinelearning">机器学习</a></li>
+					<li><a href="#" class="operatingsystem">操作系统</a></li>
+					<li><a href="#" class="database">数据库</a></li>
+				</ul>
+			</div>
+			<ul class="navlist fl">
+				<li><a href="">首页</a></li>
+				<li class="interval">|</li>
+				<li><a href="">移动端书城</a></li>
+				<li class="interval">|</li>
+				<li><a href="">秒杀</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="breadcrumb">
+		<a href="#">全部分类</a>
+		<span>></span>
+		<a href="#">Python</a>
+		<span>></span>
+		<a href="#">商品详情</a>
+	</div>
+
+	<div class="book_detail_con clearfix">
+		<div class="book_detail_pic fl"><img src="/static/images/{{ books.image }}"></div>
+
+		<div class="book_detail_list fr">
+			<h3>{{ books.name }}</h3>
+			<p>{{ books.desc }}</p>
+			<div class="prize_bar">
+				<span class="show_pirze">¥<em>{{ books.price }}</em></span>
+				<span class="show_unit">单  位：{{ books.unite }}</span>
+			</div>
+			<div class="book_num clearfix">
+				<div class="num_name fl">数 量：</div>
+				<div class="num_add fl">
+					<input type="text" class="num_show fl" value="1">
+					<a href="javascript:;" class="add fr">+</a>
+					<a href="javascript:;" class="minus fr">-</a>	
+				</div> 
+			</div>
+			<div class="total">总价：<em>100元</em></div>
+			<div class="operate_btn">
+                {% csrf_token %}
+				<a href="javascript:;" class="buy_btn">立即购买</a>
+				<a href="javascript:;" books_id = "{{ books.id }}" class="add_cart" id="add_cart">加入购物车</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_book">
+				<h3>新品推荐</h3>
+				<ul>
+                    {% for books_li in books_li %}
+					<li>
+						<a href="{% url 'books:detail' books_id=books_li.id %}"><img src="/static/images/{{ books_li.image }}"></a>
+						<h4><a href="#">{{ books_li.name }}</a></h4>
+						<div class="prize">{{ books_li.price }}</div>
+					</li>
+                    {% endfor %}
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li class="active">商品介绍</li>
+				<li>评论</li>
+			</ul>
+
+			<div class="tab_content">
+				<dl>
+					<dt>商品详情：</dt>
+					<dd>{{ books.detail | safe }}</dd>
+				</dl>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}

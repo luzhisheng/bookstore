@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load filters %}
+{% load staticfiles %}
+{% block head %}<script type="text/javascript" src="{% static 'js/pay.js' %}"></script>{% endblock %}
+{% block body %}
+{% block usercenter %}{% endblock %}
+{% block cart %}{% endblock %}
+{% block search_bar %}{% endblock %}
+
+	<div class="search_bar clearfix">
+		<a href="{% url 'books:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+
+	<div class="main_con clearfix">
+    {% csrf_token %}
+		{% include 'base_sidebar.html' %}
+		<div class="right_content clearfix">
+				<h3 class="common_title2">全部订单</h3>
+                {% for order in order_li %}
+				<ul class="order_list_th w978 clearfix">
+					<li class="col01">{{ order.create_time }}</li>
+					<li class="col02">订单号：{{ order.order_id }}</li>
+					<li class="col02 stress">{{ order.status|order_status }}</li>
+				</ul>
+
+				<table class="order_list_table w980">
+					<tbody>
+						<tr>
+							<td width="55%">
+                                {# 遍历出来的order_books是一个OrderGoods对象 #}
+                                {% for order_books in order.order_books_li %}
+								<ul class="order_book_list clearfix">					
+									<li class="col01"><img src="/static/images/{{ order_books.books.image }}"></li>
+									<li class="col02">{{ order_books.books.name }}<em>{{ order_books.books.price }}元/{{ order_books.books.unite }}</em></li>
+									<li class="col03">{{ order_books.count }}</li>
+									<li class="col04">{{ order_books.amount }}元</li>
+								</ul>
+                                {% endfor %}
+							</td>
+							<td width="15%">{{ order.total_price }}元</td>
+							<td width="15%">{{ order.status|order_status}}</td>
+							<td width="15%"><a href="{% url 'order:pay' %}" pay_method="{{ order.pay_method }}" order_id="{{ order.order_id }}" order_status="{{ order.status }}" class="oper_btn">去付款</a></td>
+						</tr>
+					</tbody>
+				</table>
+                {% endfor %}
+
+				<div class="pagenation">
+					<a href="#"><上一页</a>
+					<a href="#" class="active">1</a>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<a href="#">4</a>
+					<a href="#">5</a>
+					<a href="#">下一页></a>
+				</div>
+		</div>
+	</div>
+
+{% endblock %}

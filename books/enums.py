@@ -1,0 +1,23 @@
+#为什么定义常量，为了后台更加容易观看
+PYTHON = 1
+JAVASCRIPT = 2
+ALGORITHMS = 3
+MACHINELEARNING = 4
+OPERATINGSYSTEM = 5
+DATABASE = 6
+
+BOOKS_TYRE = {
+	PYTHON : 'Python',
+	JAVASCRIPT : 'javascript',
+	ALGORITHMS : '数据结构算法',
+	MACHINELEARNING : '机器学习',
+	OPERATINGSYSTEM : '操作系统',
+	DATABASE : '数据库'
+}
+
+OFFLINE = 0
+ONLINE = 1
+STATUS_CHOICE = {
+	OFFLINE : '下线',
+	ONLINE : '上线'
+}

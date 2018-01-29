@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block head %}<script type="text/javascript" src="{% static 'js/login.js' %}"></script>{% endblock %}
+{% block body %}
+{% block header_con %}{% endblock %}
+{% block search_bar %}{% endblock %}
+	<div class="login_top clearfix">
+		<a href="{% url 'books:index' %}" class="login_logo"><img src="{% static 'images/logo.png' %}" style="width: 160px; height: 53px;"></a>
+	</div>
+
+	<div class="login_form_bg">
+		<div class="login_form_wrap clearfix">
+			<div class="login_banner fl"></div>
+			<div class="slogan fl">学计算机 · 来尚硅谷</div>
+			<div class="login_form fr">
+				<div class="login_title clearfix">
+					<h1>用户登录</h1>
+					<a href="{% url 'user:register' %}">立即注册</a>
+				</div>
+				<div class="form_input">
+                    {% csrf_token %}
+                    <input type="text" id="username" class="name_input" value="{{ username }}" placeholder="请输入用户名">
+                    <div class="user_error">输入错误</div>
+                    <input type="password" id="pwd" class="pass_input" placeholder="请输入密码" value="">
+                    <div class="pwd_error">输入错误</div>
+                    <div class="more_input clearfix">
+                        <input type="checkbox" name="remember" {{ checked }}>
+                        <label>记住用户名</label>
+                        <a href="#">忘记密码</a>
+                    </div>
+                    <input type="button" id="btnLogin" value="登录" class="input_submit">
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
